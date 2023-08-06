@@ -12,16 +12,26 @@ public class Man extends Person {
 
     @Override
     void registerPartnership(Person woman) {
-        woman.setLastName(lastName);
-        this.partner = woman;
+        if (woman instanceof Woman){
+            woman.setLastName(lastName);
+            woman.partner = this;
+            this.partner = woman;
+        }else{
+            System.out.println("Please select a partner with other gender");
+        }
+
     }
 
 
     @Override
     void deregisterPartnership(boolean shouldReturnToMaidenName) {
+        if (partner == null){
+            return;
+        }
         if (shouldReturnToMaidenName) {
             this.partner.setLastName(this.partner.getMaidenName());
         }
+        this.partner.partner = null;
         this.partner=null;
     }
 
